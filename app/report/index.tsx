@@ -1,5 +1,5 @@
 import BottomMenu from '@/app/components/BottomMenu';
-import Header from '@/app/components/Header';
+import DropdownInput from '@/app/components/DropDownInput';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
@@ -8,8 +8,15 @@ import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 const styles = require('@/app/style');
 
 export default function ReportScreen() {
-  const [selectedType, setSelectedType] = useState('');
   const [image, setImage] = useState<string | null>(null);
+  const fakeTypes = [
+    "Assalto",
+    "Furto",
+    "Golpe",
+    "Vandalismo",
+    "Agressão",
+    "Sequestro",
+  ];
 
   async function pickImage() {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -34,7 +41,6 @@ export default function ReportScreen() {
 
   return (
     <View style={styles.container}>
-      <Header />
 
       <View style={{ padding: 20 }}>
 
@@ -52,25 +58,13 @@ export default function ReportScreen() {
         </View>
 
         {/* --------- INPUT 2: Tipo de ocorrência (select fake) --------- */}
-        <Text style={styles.label}>Tipo de Ocorrência</Text>
 
-        <View style={styles.selectBox}>
-          <Text style={{ color: selectedType ? '#000' : '#777' }}>
-            {selectedType || "Selecione um tipo"}
-          </Text>
-          <Ionicons name="chevron-down" size={20} color="#777" />
-        </View>
-
-        {/* Lista fake de opções */}
-        {selectedType === '' && (
-          <View style={styles.dropdown}>
-            {["Assalto", "Furto", "Vandalismo", "Violência Doméstica"].map((item) => (
-              <TouchableOpacity key={item} onPress={() => setSelectedType(item)}>
-                <Text style={styles.dropdownItem}>{item}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
+       <DropdownInput
+          label="Tipo de ocorrência"
+          data={fakeTypes}
+          placeholder="Digite ou selecione"
+          onSelect={(value) => console.log("Selecionado:", value)}
+        />
 
         {/* --------- INPUT 3: Imagem --------- */}
         <Text style={styles.label}>Foto da ocorrência</Text>
