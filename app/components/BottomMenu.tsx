@@ -70,9 +70,9 @@ const handleNavigate = (path: '/home' | '/map' | '/notifications' | '/report' ) 
       {/* ⚠️ Reportar ocorrência */}
       <TouchableOpacity onPress={() => handleNavigate('/report')}>
         <View style={styles.reportButton}>
-          <View style={{ backgroundColor: '#fff', borderRadius: 100 }}>
-            <Ionicons name="warning" size={96} color={colors.danger} />
+          <View style={{ backgroundColor: '#fff', borderRadius: 100, height:65, width:25, marginBottom:-100 }}>
           </View>
+          <Ionicons name="warning" size={120} color={colors.danger} />
           <Text style={styles.reportText}>Reportar{'\n'}ocorrência</Text>
         </View>
       </TouchableOpacity>
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingHorizontal: spacing.md,
+    paddingBottom:12
   },
 
   menuItem: {
@@ -118,9 +119,10 @@ const styles = StyleSheet.create({
 
   reportText: {
     fontFamily: fontsFamilies.bold,
-    fontSize: fontSizes.sm,
+    fontSize: fontSizes.lg,
+    lineHeight:18,
     color: colors.danger,
-    marginTop: -8,
+    marginTop: -5,
     textAlign: 'center',
   },
 });
