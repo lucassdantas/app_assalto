@@ -1,9 +1,10 @@
 import BottomMenu from '@/app/components/BottomMenu';
-import DropdownInput from '@/app/components/DropDownInput';
+import DropdownInput from '@/app/components/inputs/DropDownInput';
+import ImagePickerBox from '@/app/components/inputs/ImagePickerBox';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const styles = require('@/app/style');
 
@@ -41,6 +42,7 @@ export default function ReportScreen() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.header}>App do Assalto</Text>
 
       <View style={{ padding: 20 }}>
 
@@ -66,26 +68,13 @@ export default function ReportScreen() {
           onSelect={(value) => console.log("Selecionado:", value)}
         />
 
-        {/* --------- INPUT 3: Imagem --------- */}
-        <Text style={styles.label}>Foto da ocorrência</Text>
-        <View style={{ flexDirection: 'row', gap: 10 }}>
-          <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
-            <Ionicons name="image-outline" size={22} color="#fff" />
-            <Text style={styles.imageButtonText}>Galeria</Text>
-          </TouchableOpacity>
 
-          <TouchableOpacity style={styles.imageButton} onPress={takePhoto}>
-            <Ionicons name="camera-outline" size={22} color="#fff" />
-            <Text style={styles.imageButtonText}>Tirar foto</Text>
-          </TouchableOpacity>
-        </View>
+        <ImagePickerBox
+          label="Foto da ocorrência"
+          value={image}
+          onChange={(uri) => setImage(uri)}
+        />
 
-        {image && (
-          <Image
-            source={{ uri: image }}
-            style={{ width: '100%', height: 200, marginTop: 10, borderRadius: 8 }}
-          />
-        )}
 
         {/* --------- INPUT 4: Descrição --------- */}
         <Text style={styles.label}>Descrição</Text>
