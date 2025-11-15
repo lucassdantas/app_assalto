@@ -1,9 +1,9 @@
+import { colors } from '@/app/theme';
+import { fontsFamilies, fontSizes } from '@/app/theme/';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { colors } from './theme';
-import { fontsFamilies, fontSizes } from './theme/';
 
 export default function WelcomeScreen() {
   const router = useRouter();

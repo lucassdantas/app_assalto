@@ -1,18 +1,18 @@
 // app/components/BottomMenu.tsx
+import { colors } from '@/app/theme/colors';
+import { fontsFamilies, fontSizes } from '@/app/theme/fonts';
+import { spacing } from '@/app/theme/spacing';
 import { Ionicons } from '@expo/vector-icons';
 import { usePathname, useRouter } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { colors } from '../theme/colors';
-import { fontsFamilies, fontSizes } from '../theme/fonts';
-import { spacing } from '../theme/spacing';
 
 export default function BottomMenu() {
   const router = useRouter();
   const pathname = usePathname(); // identifica a tela atual
 
 // app/components/BottomMenu.tsx
-const handleNavigate = (path: '/home' | '/map' ) => {
+const handleNavigate = (path: '/home' | '/map' | '/notifications' | '/report' ) => {
   if (pathname !== path) router.push(path as any);
 };
 
@@ -62,7 +62,7 @@ const handleNavigate = (path: '/home' | '/map' ) => {
           <Ionicons
             name="notifications"
             size={24}
-            color={pathname === '/notifications' ? '#fff' : colors.primary}
+            color={pathname === '@/app/notifications' ? '#fff' : colors.primary}
           />
         </View>
       </TouchableOpacity>
