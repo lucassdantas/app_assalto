@@ -1,3 +1,4 @@
+import { colors } from '@/app/theme';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import {
@@ -61,10 +62,6 @@ export default function DropdownInput({ label, data, placeholder, onSelect }: Pr
       {/* INPUT ROW */}
       <TouchableOpacity onPress={openDropdown} activeOpacity={1}>
         <View style={[styles.inputRow, { zIndex: 30 }]}>
-          <TouchableOpacity onPress={openDropdown}>
-            <Ionicons name="chevron-down" size={20} color="#777" style={{ marginRight: 6 }} />
-          </TouchableOpacity>
-
           <TextInput
             value={inputValue}
             onFocus={openDropdown}
@@ -73,6 +70,10 @@ export default function DropdownInput({ label, data, placeholder, onSelect }: Pr
             placeholderTextColor="#aaa"
             style={[styles.input, { paddingVertical: 8 }]}
           />
+
+          <TouchableOpacity onPress={openDropdown}>
+            <Ionicons name="chevron-down" size={28} color="#777" style={{ marginRight: 6, color:colors.primary }} />
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
 

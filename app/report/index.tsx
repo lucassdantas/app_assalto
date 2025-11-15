@@ -64,7 +64,7 @@ export default function ReportScreen() {
        <DropdownInput
           label="Tipo de ocorrência"
           data={fakeTypes}
-          placeholder="Digite ou selecione"
+          placeholder=""
           onSelect={(value) => console.log("Selecionado:", value)}
         />
 

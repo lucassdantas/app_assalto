@@ -36,12 +36,7 @@ module.exports = StyleSheet.create({
     marginHorizontal: 6,
   },
 
-  input: {
-    flex: 1,
-    fontFamily: fontsFamilies.regular,
-    fontSize: fontSizes.md,
-    color: colors.textPrimary,
-  },
+
 
   postCard: {
     backgroundColor: '#fff',
@@ -83,7 +78,6 @@ module.exports = StyleSheet.create({
    map: {
     flex: 1,
   },
-  // Adicione dentro do seu StyleSheet existente:
 
 label: {
   fontSize: 16,
@@ -91,15 +85,24 @@ label: {
   marginBottom: 6,
   color: '#222',
 },
+  input: {
+    flex: 1,
+    fontFamily: fontsFamilies.regular,
+    fontSize: fontSizes.md,
+    color: colors.textPrimary,
+    backgroundColor:'#fff',
+    borderRadius:40,
 
+  },
 inputRow: {
   flexDirection: 'row',
   alignItems: 'center',
-  backgroundColor: '#f2f2f2',
-  paddingHorizontal: 12,
-  borderRadius: 8,
+  backgroundColor: '#fff',
+  borderRadius: 40,
   height: 45,
   marginBottom: 16,
+  borderColor:colors.primary,
+  borderWidth:1,
 },
 
 

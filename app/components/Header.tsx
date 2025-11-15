@@ -1,3 +1,6 @@
+import { colors } from '@/app/theme/colors';
+import { fontsFamilies, fontSizes } from '@/app/theme/fonts';
+import { spacing } from '@/app/theme/spacing';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import {
@@ -6,9 +9,6 @@ import {
   TextInput,
   View
 } from 'react-native';
-import { colors } from '../theme/colors';
-import { fontsFamilies, fontSizes } from '../theme/fonts';
-import { spacing } from '../theme/spacing';
 
 export default function Header() {
   return (
