@@ -4,12 +4,14 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function WelcomeScreen() {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
       <Text style={styles.mainTitle}>App do Assalto</Text>
 
       <TouchableOpacity style={styles.button} onPress={() => router.push('/home')}>
@@ -17,7 +19,10 @@ export default function WelcomeScreen() {
           Iniciar <FontAwesome5 name='angle-double-right' size={16} color='#fff' />
         </Text>
       </TouchableOpacity>
-    </View>
+
+      </View>
+      <Text style={{color:'#777'}}>Versão 0.0.0.1b</Text>
+    </SafeAreaView>
   );
 }
 

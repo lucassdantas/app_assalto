@@ -1,10 +1,11 @@
 import BottomMenu from '@/app/components/BottomMenu';
 import DropdownInput from '@/app/components/inputs/DropDownInput';
 import ImagePickerBox from '@/app/components/inputs/ImagePickerBox';
+import { colors } from '@/app/theme';
 import { Ionicons } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const styles = require('@/app/style');
 
@@ -19,29 +20,8 @@ export default function ReportScreen() {
     "Sequestro",
   ];
 
-  async function pickImage() {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-  }
-
-  async function takePhoto() {
-    const result = await ImagePicker.launchCameraAsync({
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-  }
-
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.header}>App do Assalto</Text>
 
       <View style={{ padding: 20 }}>
@@ -50,13 +30,13 @@ export default function ReportScreen() {
         <Text style={styles.label}>Local da ocorrência</Text>
 
         <View style={styles.inputRow}>
-          <Ionicons name="search" size={20} color="#999" style={{ marginRight: 8 }} />
           <TextInput
-            placeholder="Digite o local"
+            placeholder=""
             style={styles.input}
             placeholderTextColor="#aaa"
           />
-          <Ionicons name="location" size={20} color="#999" style={{ marginLeft: 8 }} />
+          <Ionicons name="search" size={30} color={colors.primary} style={{ marginRight: 8 }} />
+          <Ionicons name="locate" size={30} color={colors.primary} style={{ marginRight: 12 }} />
         </View>
 
         {/* --------- INPUT 2: Tipo de ocorrência (select fake) --------- */}
@@ -70,7 +50,7 @@ export default function ReportScreen() {
 
 
         <ImagePickerBox
-          label="Foto da ocorrência"
+          label="Imagem"
           value={image}
           onChange={(uri) => setImage(uri)}
         />
@@ -79,10 +59,10 @@ export default function ReportScreen() {
         {/* --------- INPUT 4: Descrição --------- */}
         <Text style={styles.label}>Descrição</Text>
         <TextInput
-          placeholder="Descreva o que aconteceu..."
           placeholderTextColor="#aaa"
-          style={styles.textArea}
+          style={styles.inputDescription}
           multiline
+          textAlignVertical='top'
         />
 
         {/* --------- BOTÃO ENVIAR --------- */}
@@ -92,6 +72,6 @@ export default function ReportScreen() {
       </View>
 
       <BottomMenu />
-    </View>
+    </SafeAreaView>
   );
 }

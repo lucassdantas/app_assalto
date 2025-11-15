@@ -3,13 +3,13 @@ import BottomMenu from '@/app/components/BottomMenu';
 import Header from '@/app/components/Header';
 import { colors } from '@/app/theme/colors';
 import React from 'react';
-import { View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const styles = require('@/app/style')
 
 export default function MapScreen() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header/>
       <MapView
         style={styles.map}
@@ -29,6 +29,6 @@ export default function MapScreen() {
         />
       </MapView>
       <BottomMenu />
-    </View>
+    </SafeAreaView>
   );
 }

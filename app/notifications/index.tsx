@@ -2,15 +2,15 @@
 import BottomMenu from '@/app/components/BottomMenu';
 import Header from '@/app/components/Header';
 import React from 'react';
-import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const styles = require('@/app/style')
 
 export default function NotificationsScreen() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header/>
      
       <BottomMenu />
-    </View>
+    </SafeAreaView>
   );
 }

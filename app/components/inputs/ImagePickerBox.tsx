@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { colors, fontSizes } from '@/app/theme';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
 import {
@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+const styles = require('@/app/style')
 
 type Props = {
   label?: string;
@@ -77,7 +78,7 @@ export default function ImagePickerBox({
   return (
     <View style={{ marginBottom: 20 }}>
       {label && (
-        <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 6 }}>
+        <Text style={styles.label}>
           {label}
         </Text>
       )}
@@ -86,10 +87,10 @@ export default function ImagePickerBox({
         style={{
           width: '100%',
           height,
-          backgroundColor: '#eee',
+          backgroundColor: '#fff',
           borderRadius: 10,
           borderWidth: 1,
-          borderColor: '#ccc',
+          borderColor: colors.primary,
           justifyContent: 'center',
           alignItems: 'center',
           overflow: 'hidden',
@@ -104,12 +105,9 @@ export default function ImagePickerBox({
             resizeMode="cover"
           />
         ) : (
-          <>
-            <Ionicons name="camera" size={42} color="#777" />
-            <Text style={{ color: '#777', marginTop: 8 }}>
-              Toque para adicionar imagem
-            </Text>
-          </>
+          <Text style={{ color: colors.primary, marginTop: 8, fontSize:fontSizes.md }}>
+            Clique para enviar ou tirar uma foto
+          </Text>
         )}
       </TouchableOpacity>
     </View>

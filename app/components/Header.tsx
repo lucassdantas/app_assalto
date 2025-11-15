@@ -12,7 +12,7 @@ import {
 
 export default function Header() {
   return (
-    <View style={styles.container}>
+    <View style={styles.headerContainer}>
       <Text style={styles.header}>App do Assalto</Text>
       <View style={styles.searchContainer}>
         <TextInput
@@ -20,23 +20,19 @@ export default function Header() {
           placeholderTextColor={colors.textSecondary}
           style={styles.input}
         />
-        <Ionicons
-          name="location-outline"
-          size={20}
-          color={colors.textSecondary}
-          style={styles.iconRight}
-        />
-        <Ionicons name="search" size={20} color={colors.textSecondary} />
+        <Ionicons name="search" size={30} color={colors.primary} />
+        <Ionicons name="locate" size={30} color={colors.primary} style={styles.iconRight} />
+        <Ionicons name="funnel" size={30} color={colors.primary} />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  headerContainer: {
+    paddingTop:15,
     backgroundColor: colors.background,
     paddingHorizontal: spacing.lg,
-    paddingTop: 50,
   },
 
   header: {
@@ -55,7 +51,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     paddingVertical: 8,
     marginBottom: spacing.lg,
-    elevation: 2,
+    borderColor:colors.primary,
+    borderWidth:1 
   },
 
   iconRight: {

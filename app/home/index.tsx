@@ -7,6 +7,7 @@ import {
   Text,
   View
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const styles = require('@/app/style')
 // Exemplo de posts
 const posts = [
@@ -35,7 +36,7 @@ const posts = [
 
 export default function HomeScreen() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header/>
       {/* 📰 Lista de posts */}
       <FlatList
@@ -56,6 +57,6 @@ export default function HomeScreen() {
       />
 
       <BottomMenu />
-    </View>
+    </SafeAreaView>
   );
 }

@@ -10,7 +10,6 @@ module.exports = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
     paddingHorizontal: spacing.lg,
-    paddingTop: 50,
   },
 
   header: {
@@ -83,7 +82,7 @@ label: {
   fontSize: 16,
   fontWeight: '600',
   marginBottom: 6,
-  color: '#222',
+  color: colors.primary,
 },
   input: {
     flex: 1,
@@ -98,13 +97,19 @@ inputRow: {
   flexDirection: 'row',
   alignItems: 'center',
   backgroundColor: '#fff',
-  borderRadius: 40,
-  height: 45,
+  borderRadius: 5,
   marginBottom: 16,
   borderColor:colors.primary,
   borderWidth:1,
 },
-
+inputDescription: {
+  backgroundColor: '#fff',
+  borderRadius: 5,
+  marginBottom: 16,
+  borderColor:colors.primary,
+  borderWidth:1,
+  height:80,
+},
 
 selectBox: {
   flexDirection: 'row',
