@@ -10,20 +10,25 @@ import {
   View
 } from 'react-native';
 
-export default function Header() {
+type HeaderProps=  {
+  hasSearchBar?:boolean;
+}
+export default function Header({hasSearchBar = true}:Readonly<HeaderProps>) {
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.header}>App do  {'\n'}Assalto</Text>
-      <View style={styles.searchContainer}>
-        <TextInput
-          placeholder="."
-          placeholderTextColor={colors.textSecondary}
-          style={styles.headerSearchInput}
-        />
-        <Ionicons name="search" size={30} color={colors.primary} />
-        <Ionicons name="locate" size={30} color={colors.primary} style={styles.iconRight} />
-        <Ionicons name="funnel" size={30} color={colors.primary} />
-      </View>
+      {hasSearchBar && 
+        <View style={styles.searchContainer}>
+          <TextInput
+            placeholder="."
+            placeholderTextColor={colors.textSecondary}
+            style={styles.headerSearchInput}
+          />
+          <Ionicons name="search" size={30} color={colors.primary} />
+          <Ionicons name="locate" size={30} color={colors.primary} style={styles.iconRight} />
+          <Ionicons name="funnel" size={30} color={colors.primary} />
+        </View>
+      }
     </View>
   );
 }

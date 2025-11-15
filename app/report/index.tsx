@@ -1,4 +1,5 @@
 import BottomMenu from '@/app/components/BottomMenu';
+import Header from '@/app/components/Header';
 import DropdownInput from '@/app/components/inputs/DropDownInput';
 import ImagePickerBox from '@/app/components/inputs/ImagePickerBox';
 import { colors } from '@/app/theme';
@@ -22,7 +23,7 @@ export default function ReportScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>App do Assalto</Text>
+      <Header hasSearchBar={false}/>
 
       <View style={{ padding: 20 }}>
 
