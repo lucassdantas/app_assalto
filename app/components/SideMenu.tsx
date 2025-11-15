@@ -19,11 +19,11 @@ type Props = {
 };
 
 export default function SideMenu({ visible, onClose }: Props) {
-  const slideAnim = new Animated.Value(visible ? 0 : -width);
+  const slideAnim = React.useRef(new Animated.Value(width)).current;
 
   React.useEffect(() => {
     Animated.timing(slideAnim, {
-      toValue: visible ? 0 : -width,
+      toValue: visible ? 0 : width,
       duration: 250,
       useNativeDriver: true,
     }).start();
@@ -35,7 +35,12 @@ export default function SideMenu({ visible, onClose }: Props) {
         <TouchableOpacity style={styles.overlay} onPress={onClose} activeOpacity={1} />
       )}
 
-      <Animated.View style={[styles.menu, { transform: [{ translateX: slideAnim }] }]}>
+      <Animated.View
+        style={[
+          styles.menu,
+          { transform: [{ translateX: slideAnim }] },
+        ]}
+      >
         {/* Botão de fechar */}
         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
           <Ionicons name="close" size={32} color={colors.primary} />
@@ -79,10 +84,10 @@ const styles = StyleSheet.create({
 
   menu: {
     position: "absolute",
-    left: 0,
+    right: 0,
     top: 0,
     bottom: 0,
-    width: width * 0.75,
+    width: width * 0.95,
     backgroundColor: "#fff",
     paddingTop: 50,
     paddingHorizontal: 20,
@@ -103,7 +108,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     fontFamily: fontsFamilies.medium,
     fontSize: fontSizes.md,
-    color: colors.textPrimary,
+    color: colors.primary,
   },
 
   footer: {

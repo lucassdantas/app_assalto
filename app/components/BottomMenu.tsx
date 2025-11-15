@@ -12,7 +12,7 @@ export default function BottomMenu() {
   const pathname = usePathname(); // identifica a tela atual
 
 // app/components/BottomMenu.tsx
-const handleNavigate = (path: '/home' | '/map' | '/notifications' | '/report' ) => {
+const handleNavigate = (path: '/home' | '/map' | '/profile' | '/report' ) => {
   if (pathname !== path) router.push(path as any);
 };
 
@@ -44,7 +44,7 @@ const handleNavigate = (path: '/home' | '/map' | '/notifications' | '/report' ) 
           ]}
         >
           <Ionicons
-            name="map"
+            name="location-outline"
             size={24}
             color={pathname === '/map' ? '#fff' : colors.primary}
           />
@@ -52,17 +52,17 @@ const handleNavigate = (path: '/home' | '/map' | '/notifications' | '/report' ) 
       </TouchableOpacity>
 
       {/* 🔔 Notificações */}
-      <TouchableOpacity onPress={() => handleNavigate('/notifications')}>
+      <TouchableOpacity onPress={() => handleNavigate('/profile')}>
         <View
           style={[
             styles.menuItem,
-            pathname === '/notifications' && styles.menuItemActive,
+            pathname === '/profile' && styles.menuItemActive,
           ]}
         >
           <Ionicons
-            name="notifications"
+            name="person-outline"
             size={24}
-            color={pathname === '@/app/notifications' ? '#fff' : colors.primary}
+            color={pathname === '@/app/profile' ? '#fff' : colors.primary}
           />
         </View>
       </TouchableOpacity>
