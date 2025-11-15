@@ -13,12 +13,12 @@ import {
 export default function Header() {
   return (
     <View style={styles.headerContainer}>
-      <Text style={styles.header}>App do Assalto</Text>
+      <Text style={styles.header}>App do  {'\n'}Assalto</Text>
       <View style={styles.searchContainer}>
         <TextInput
-          placeholder="Buscar ocorrências..."
+          placeholder="."
           placeholderTextColor={colors.textSecondary}
-          style={styles.input}
+          style={styles.headerSearchInput}
         />
         <Ionicons name="search" size={30} color={colors.primary} />
         <Ionicons name="locate" size={30} color={colors.primary} style={styles.iconRight} />
@@ -36,11 +36,13 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    fontSize: fontSizes.lg,
+    fontSize: fontSizes.xl,
+    lineHeight:24,
     fontFamily: fontsFamilies.bold,
     color: colors.primary,
     marginBottom: spacing.md,
     textAlign: 'center',
+    textTransform:'uppercase'
   },
 
   searchContainer: {
@@ -59,11 +61,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
   },
 
-  input: {
+  headerSearchInput: {
     flex: 1,
     fontFamily: fontsFamilies.regular,
     fontSize: fontSizes.md,
     color: colors.textPrimary,
+    height:30,
   },
 
 
