@@ -5,47 +5,54 @@ import ImagePickerBox from '@/app/components/inputs/ImagePickerBox';
 import { supabase } from '@/app/services/supabaseClient';
 import { colors } from '@/app/theme';
 import { Ionicons } from '@expo/vector-icons';
-import * as FileSystem from 'expo-file-system';
+
+import * as FileSystem from 'expo-file-system/legacy';
+
 import React, { useState } from 'react';
 import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const styles = require('@/app/style');
 
-// -------- CONVERTE BASE64 → ARRAYBUFFER (SUPABASE RN OFICIAL) -------- //
+// -------- BASE64 → ARRAYBUFFER -------- //
 function base64ToArrayBuffer(base64: string) {
-  const binaryString = global.atob(base64);
-  const len = binaryString.length;
-  const bytes = new Uint8Array(len);
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
 
-  for (let i = 0; i < len; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
   }
+
   return bytes.buffer;
 }
 
-// -------- UPLOAD CORRETO PARA SUPABASE STORAGE NO REACT NATIVE -------- //
+// -------- UPLOAD SUPABASE (RN OFICIAL) -------- //
 async function uploadImageRN(uri: string) {
- const base64 = await FileSystem.readAsStringAsync(uri, {
-    encoding: 'base64'
+  // 1️⃣ Lê arquivo como Base64
+  const base64 = await FileSystem.readAsStringAsync(uri, {
+    encoding: FileSystem.EncodingType.Base64,
   });
 
+  // 2️⃣ Converte para ArrayBuffer
   const arrayBuffer = base64ToArrayBuffer(base64);
 
+  // 3️⃣ Nome no bucket
   const fileName = `reports/${Date.now()}.jpg`;
 
-  const { data, error } = await supabase.storage
-    .from("reports-images")
-    .upload(fileName, arrayBuffer, {
-      contentType: "image/jpeg",
-      upsert: false,
-    });
+  // 4️⃣ Envio para Supabase
+  // const { error } = await supabase.storage
+  //   .from("reports_images_bucket")
+  //   .upload(fileName, arrayBuffer, {
+  //     contentType: "image/jpeg",
+  //     upsert: false,
+  //   });
 
-  if (error) throw error;
+  // if (error) throw error;
 
-  return supabase.storage
-    .from("reports-images")
-    .getPublicUrl(fileName).data.publicUrl;
+  // // 5️⃣ Retorna URL pública
+  // return supabase.storage
+  //   .from("reports_images_bucket")
+  //   .getPublicUrl(fileName).data.publicUrl;
 }
 
 export default function ReportScreen() {
@@ -71,15 +78,14 @@ export default function ReportScreen() {
     }
 
     setLoading(true);
-    let imageUrl = null;
 
     try {
-      // ---- SE TIVER IMAGEM, FAZ UPLOAD ---- //
+      let imageUrl = null;
+
       if (image) {
         imageUrl = await uploadImageRN(image);
       }
 
-      // ---- INSERE NA TABELA REPORTS ---- //
       const { error } = await supabase.from("reports").insert({
         title: type,
         address,
@@ -97,7 +103,7 @@ export default function ReportScreen() {
       setImage(null);
 
     } catch (err: any) {
-      Alert.alert("Erro ao enviar", err.message || "Tente novamente.");
+      Alert.alert("Erro ao enviar", err.message);
       console.log(err);
     }
 
@@ -134,7 +140,7 @@ export default function ReportScreen() {
         <ImagePickerBox
           label="Imagem"
           value={image}
-          onChange={(uri) => setImage(uri)}
+          onChange={setImage}
         />
 
         <Text style={styles.label}>Descrição</Text>
