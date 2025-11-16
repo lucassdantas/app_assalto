@@ -1,6 +1,8 @@
 import BottomMenu from '@/app/components/BottomMenu';
 import Header from '@/app/components/Header';
-import React from 'react';
+import { supabase } from '@/app/services/supabaseClient';
+import { Report } from '@/app/types/report';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -9,52 +11,61 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 const styles = require('@/app/style')
-// Exemplo de posts
-const posts = [
-  {
-    id: '1',
-    title: 'Tentativa de furto em loja',
-    address: 'Rua das Flores, Curitiba - PR',
-    description: 'Suspeito foi detido por seguranças após tentativa de furto.',
-    image: 'https://picsum.photos/401/200',
-  },
-  {
-    id: '2',
-    title: 'Furto em residência',
-    address: 'Avenida Paulista, São Paulo - SP',
-    description: 'Casa invadida durante a madrugada.',
-    image: 'https://picsum.photos/402/200',
-  },
-  {
-    id: '3',
-    title: 'Roubo de veículo',
-    address: 'Centro, Belo Horizonte - MG',
-    description: 'Carro roubado próximo à praça principal.',
-    image: 'https://picsum.photos/403/200',
-  },
-];
 
 export default function HomeScreen() {
+  const [reports, setReports] = useState<Report[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadReports() {
+      const { data, error } = await supabase
+        .from('reports')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (!error && data) {
+        setReports(data);
+        console.log("IMAGENS:", data.map(r => r.image));
+      }
+
+      setLoading(false);
+    }
+
+    loadReports();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
-      <Header/>
-      {/* 📰 Lista de posts */}
-      <FlatList
-        data={posts}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.postCard}>
-            <Image source={{ uri: item.image }} style={styles.image} />
-            <View style={styles.postContent}>
-              <Text style={styles.postTitle}>{item.title}</Text>
-              <Text style={styles.postAddress}>{item.address}</Text>
-              <Text style={styles.postDescription}>{item.description}</Text>
+      <Header />
+
+      {!loading &&
+        <FlatList
+          data={reports}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.postCard}>
+              
+              {/* Se não tiver imagem, usa uma padrão */}
+              <Image
+                source={{
+                  uri: item.image
+                    ? item.image
+                    : "https://placehold.co/600x400?text=Sem+Imagem"
+                }}
+                style={styles.image}
+              />
+
+              <View style={styles.postContent}>
+                <Text style={styles.postTitle}>{item.title}</Text>
+                <Text style={styles.postAddress}>{item.address}</Text>
+                <Text style={styles.postDescription}>{item.description}</Text>
+              </View>
             </View>
-          </View>
-        )}
-        contentContainerStyle={{ paddingBottom: 120 }}
-        showsVerticalScrollIndicator={false}
-      />
+          )}
+          contentContainerStyle={{ paddingBottom: 120 }}
+          showsVerticalScrollIndicator={false}
+        />
+      }
 
       <BottomMenu />
     </SafeAreaView>
