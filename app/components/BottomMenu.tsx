@@ -60,9 +60,9 @@ const handleNavigate = (path: '/home' | '/map' | '/profile' | '/report' ) => {
           ]}
         >
           <Ionicons
-            name="person-outline"
+            name="person"
             size={24}
-            color={pathname === '@/app/profile' ? '#fff' : colors.primary}
+            color={pathname === '/profile' ? '#fff' : colors.primary}
           />
         </View>
       </TouchableOpacity>

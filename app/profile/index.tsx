@@ -1,16 +1,38 @@
 import BottomMenu from '@/app/components/BottomMenu';
 import Header from '@/app/components/Header';
+import { supabase } from '@/app/services/supabaseClient';
 import { colors } from '@/app/theme/colors';
 import { fontsFamilies, fontSizes } from '@/app/theme/fonts';
 import { spacing } from '@/app/theme/spacing';
+import { Report } from '@/app/types/report';
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const stylesGlobal = require('@/app/style')
 
 export default function ProfileScreen() {
+  const [reports, setReports] = useState<Report[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadReports() {
+      const { data, error } = await supabase
+        .from('reports')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (!error && data) {
+        setReports(data);
+        console.log("IMAGENS:", data.map(r => r.image));
+      }
+
+      setLoading(false);
+    }
+
+    loadReports();
+  }, []);
 
   // 🔹 APENAS EXEMPLO — depois você substitui pelas informações do supabase
   const user = {
@@ -22,10 +44,6 @@ export default function ProfileScreen() {
     avatar: null,
   };
 
-  const posts = [
-    { id: 1, title: "Assalto na rua tal", date: "Hoje" },
-    { id: 2, title: "Tentativa de assalto no bairro X", date: "Ontem" },
-  ];
 
   return (
     <SafeAreaView style={stylesGlobal.container}>
@@ -39,7 +57,7 @@ export default function ProfileScreen() {
             {user.avatar ? (
               <Image source={{ uri: user.avatar }} style={styles.avatarImage} />
             ) : (
-              <Ionicons name="person" size={70} color={colors.primary} />
+              <Ionicons name="person" size={70} color={'#fff'} />
             )}
           </View>
         </View>
@@ -61,19 +79,34 @@ export default function ProfileScreen() {
         {/* TÍTULO */}
         <Text style={styles.sectionTitle}>Minhas últimas denúncias</Text>
 
-        {/* LISTA DE POSTS */}
-        {posts.map((post) => (
-          <View key={post.id} style={styles.postItem}>
-            <View>
-              <Text style={styles.postTitle}>{post.title}</Text>
-              <Text style={styles.postDate}>{post.date}</Text>
-            </View>
+       {!loading &&
+        <FlatList
+          data={reports}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={stylesGlobal.postCard}>
+              
+              {/* Se não tiver imagem, usa uma padrão */}
+              <Image
+                source={{
+                  uri: item.image
+                    ? item.image
+                    : "https://placehold.co/600x400?text=Sem+Imagem"
+                }}
+                style={stylesGlobal.image}
+              />
 
-            <TouchableOpacity>
-              <Ionicons name="pencil" size={24} color={colors.primary} />
-            </TouchableOpacity>
-          </View>
-        ))}
+              <View style={stylesGlobal.postContent}>
+                <Text style={stylesGlobal.postTitle}>{item.title}</Text>
+                <Text style={stylesGlobal.postAddress}>{item.address}</Text>
+                <Text style={stylesGlobal.postDescription}>{item.description}</Text>
+              </View>
+            </View>
+          )}
+          contentContainerStyle={{ paddingBottom: 120 }}
+          showsVerticalScrollIndicator={false}
+        />
+      }
 
       </ScrollView>
 
@@ -98,7 +131,7 @@ const styles = StyleSheet.create({
     width: 140,
     height: 140,
     borderRadius: 70,
-    backgroundColor: "#fff",
+    backgroundColor: colors.primary,
     borderWidth: 2,
     borderColor: colors.primary,
     justifyContent: "center",
@@ -114,7 +147,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: fontSizes.xl,
     fontFamily: fontsFamilies.bold,
-    color: colors.textPrimary,
+    color: colors.primary,
     textAlign: "center",
     marginTop: spacing.md,
   },
