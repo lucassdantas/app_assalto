@@ -1,6 +1,6 @@
 import BottomMenu from '@/app/components/BottomMenu';
 import Header from '@/app/components/Header';
-import { supabase } from '@/app/services/supabaseClient';
+import { supabase } from '@/app/services/db/client';
 import { colors } from '@/app/theme/colors';
 import { fontsFamilies, fontSizes } from '@/app/theme/fonts';
 import { spacing } from '@/app/theme/spacing';

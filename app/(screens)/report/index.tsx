@@ -2,7 +2,7 @@ import BottomMenu from '@/app/components/BottomMenu';
 import Header from '@/app/components/Header';
 import DropdownInput from '@/app/components/inputs/DropDownInput';
 import ImagePickerBox from '@/app/components/inputs/ImagePickerBox';
-import { supabase } from '@/app/services/supabaseClient';
+import { supabase } from '@/app/services/db/client';
 import { colors } from '@/app/theme';
 import { Ionicons } from '@expo/vector-icons';
 
