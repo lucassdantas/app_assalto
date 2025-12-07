@@ -1,10 +1,10 @@
 import BottomMenu from '@/app/components/BottomMenu';
 import Header from '@/app/components/Header';
-import { supabase } from '@/app/services/db/client';
+import getCriminalReportByAuthorId from '@/app/services/db/entities/criminalReport/getByAuthorId';
+import { CriminalReport } from '@/app/services/db/entities/criminalReport/interface';
 import { colors } from '@/app/theme/colors';
 import { fontsFamilies, fontSizes } from '@/app/theme/fonts';
 import { spacing } from '@/app/theme/spacing';
-import { Report } from '@/app/types/report';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -13,26 +13,23 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const stylesGlobal = require('@/app/style')
 
 export default function ProfileScreen() {
-  const [reports, setReports] = useState<Report[]>([]);
+  const [reports, setReports] = useState<CriminalReport[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function loadReports() {
-      const { data, error } = await supabase
-        .from('reports')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (!error && data) {
-        setReports(data);
-        console.log("IMAGENS:", data.map(r => r.image));
-      }
-
-      setLoading(false);
-    }
-
-    loadReports();
-  }, []);
+   useEffect(() => {
+     async function loadData() {
+       try {
+         const response = await getCriminalReportByAuthorId({authorId:'1'});
+         setReports(response);
+       } catch (error) {
+         console.error("Erro ao carregar reports:", error);
+       } finally {
+         setLoading(false);
+       }
+     }
+ 
+     loadData();
+   }, []);
 
   // 🔹 APENAS EXEMPLO — depois você substitui pelas informações do supabase
   const user = {
@@ -89,8 +86,8 @@ export default function ProfileScreen() {
               {/* Se não tiver imagem, usa uma padrão */}
               <Image
                 source={{
-                  uri: item.image
-                    ? item.image
+                  uri: item.image_url
+                    ? item.image_url
                     : "https://placehold.co/600x400?text=Sem+Imagem"
                 }}
                 style={stylesGlobal.image}

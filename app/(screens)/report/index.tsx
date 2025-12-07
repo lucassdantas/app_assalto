@@ -2,10 +2,10 @@ import BottomMenu from '@/app/components/BottomMenu';
 import Header from '@/app/components/Header';
 import DropdownInput from '@/app/components/inputs/DropDownInput';
 import ImagePickerBox from '@/app/components/inputs/ImagePickerBox';
-import { supabase } from '@/app/services/db/client';
+import insertCriminalReport from '@/app/services/db/entities/criminalReport/insert';
+import { uploadReportImage } from '@/app/services/storage/uploadReportImage';
 import { colors } from '@/app/theme';
 import { Ionicons } from '@expo/vector-icons';
-
 import * as FileSystem from 'expo-file-system/legacy';
 
 import React, { useState } from 'react';
@@ -26,7 +26,6 @@ function base64ToArrayBuffer(base64: string) {
   return bytes.buffer;
 }
 
-// -------- UPLOAD SUPABASE (RN OFICIAL) -------- //
 async function uploadImageRN(uri: string) {
   // 1️⃣ Lê arquivo como Base64
   const base64 = await FileSystem.readAsStringAsync(uri, {
@@ -71,6 +70,7 @@ export default function ReportScreen() {
     "Sequestro",
   ];
 
+
   async function handleSubmit() {
     if (!address || !type || !description) {
       Alert.alert("Preencha todos os campos obrigatórios.");
@@ -80,20 +80,23 @@ export default function ReportScreen() {
     setLoading(true);
 
     try {
-      let imageUrl = null;
+      let imageUrl = 'a';
 
       if (image) {
-        imageUrl = await uploadImageRN(image);
+        imageUrl = await uploadReportImage(image);
       }
 
-      const { error } = await supabase.from("reports").insert({
+      await insertCriminalReport({
         title: type,
         address,
         description,
-        image: imageUrl,
+        image_url: imageUrl,
+        author_id: 1,
+        category: '1',
+        crime_date:'2025-05-05:15:45',
+        coordinate_x: 'data.coordinate_x ?? null,',
+        coordinate_y: 'data.coordinate_y ?? null,'
       });
-
-      if (error) throw error;
 
       Alert.alert("Sucesso!", "Ocorrência enviada.");
 
