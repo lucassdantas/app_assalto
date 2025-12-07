@@ -163,31 +163,34 @@ const styles = StyleSheet.create({
   editButton: {
     marginTop: spacing.lg,
     alignSelf: "center",
-    backgroundColor: colors.primary,
+    borderColor:colors.primary,
+    borderWidth:1,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 10,
+    borderRadius: 16,
   },
 
   editButtonText: {
-    color: "#fff",
+    color: colors.primary,
     fontFamily: fontsFamilies.bold,
     fontSize: fontSizes.md,
   },
 
   divider: {
-    height: 2,
+    height: 1,
     backgroundColor: colors.primary,
-    width: "100%",
+    width: "80%",
     marginTop: spacing.xl,
     marginBottom: spacing.md,
+    marginHorizontal:'auto',
   },
 
   sectionTitle: {
     fontSize: fontSizes.lg,
     fontFamily: fontsFamilies.bold,
-    color: colors.textPrimary,
+    color: colors.primary,
     marginBottom: spacing.md,
+    textAlign:'center'
   },
 
   postItem: {

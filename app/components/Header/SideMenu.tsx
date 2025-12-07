@@ -87,11 +87,14 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    width: width * 0.95,
+    width: width * 0.75,
     backgroundColor: "#fff",
     paddingTop: 50,
     paddingHorizontal: 20,
-    zIndex: 20,
+    zIndex: 999999,
+    elevation: 50,
+    borderTopLeftRadius:50,
+    borderBottomLeftRadius:50
   },
 
   closeButton: {
@@ -120,5 +123,17 @@ const styles = StyleSheet.create({
   version: {
     color: colors.textSecondary,
     fontSize: fontSizes.sm,
+  },
+  sideMenu: {
+    position: "absolute",
+    right: 0,
+    top: 0,
+    bottom: 0,
+    width: width * 0.95,
+    backgroundColor: "#fff",
+    paddingTop: 50,
+    paddingHorizontal: 20,
+    zIndex: 999999,
+    elevation: 50,
   },
 });
